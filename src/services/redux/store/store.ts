@@ -6,11 +6,14 @@ import {
 	TypedUseSelectorHook,
 	useSelector as selectorHook,
 } from "react-redux";
+import pointsSlice from "../features/points-slice";
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
-	reducer: {},
+	reducer: {
+		points: pointsSlice,
+	},
 	devTools: process.env.NODE_ENV !== "production",
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
