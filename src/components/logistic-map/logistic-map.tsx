@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 
 // import MarkerClusterGroup from "react-leaflet-markercluster";
@@ -10,46 +10,27 @@ const center: LatLngExpression = [51.505, -0.09];
 const zoom = 13;
 
 const LogisticMap: FC = () => {
-	const map = useRef<L.Map>(null);
-	// const map =
-	// 		useRef <
-	// 		React.ForwardRefExoticComponent<
-	// 			MapContainerProps & React.RefAttributes<LeafletMap>
-	// 		>(null);
+	const [map, setMap] = useState<L.Map>();
 
-	// const displayMap = useMemo(
-	// 	() => (
-	// 		<MapContainer
-	// 			className={styles.logisticMap}
-	// 			center={center}
-	// 			zoom={zoom}
-	// 			scrollWheelZoom={false}
-	// 			ref={map}
-	// 		>
-	// 			<TileLayer
-	// 				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-	// 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-	// 			/>
-	// 		</MapContainer>
-	// 	),
-	// 	[]
-	// );
+	const setRef = (element: any) => {
+		setMap(element);
+	};
 
 	return (
 		<div>
-			{map ? <MapController map={map} /> : "Loading"}
 			<MapContainer
 				className={styles.logisticMap}
 				center={center}
 				zoom={zoom}
 				scrollWheelZoom={false}
-				ref={map}
+				ref={setRef}
 			>
 				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					attribution="Demo logistic"
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
 			</MapContainer>
+			{map ? <MapController map={map} /> : "Loading"}
 		</div>
 	);
 };
