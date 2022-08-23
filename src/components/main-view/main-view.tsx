@@ -1,25 +1,21 @@
-import LogisticMap from "../logistic-map/logistic-map";
 import { LatLngExpression } from "leaflet";
 import { useState } from "react";
-import { Button } from "antd";
+import MapView from "../logistic-map/map-view";
+import MapController from "../map-contorller/map-controller";
 
-const barcelona: LatLngExpression = [41.44, 2.13];
-const to: LatLngExpression = [41.55, 2.36];
+const DEFAULT_POSITION: LatLngExpression = [41.44, 2.13];
 
 const MainView = () => {
-	const [positionFrom, setPostionFrom] = useState<LatLngExpression | null>(
-		null
-	);
-	const [positionTo, setPostionTo] = useState<LatLngExpression | null>(null);
+	const [map, setMap] = useState<L.Map>();
 
-	const onClick = () => {
-		setPostionFrom(barcelona);
-		setPostionTo(to);
+	const setRef = (element: L.Map) => {
+		setMap(element);
 	};
+
 	return (
 		<div>
-			<Button onClick={onClick}>To barcelona</Button>
-			<LogisticMap positionFrom={positionFrom} positionTo={positionTo} />;
+			{map ? <MapController map={map} /> : "Loading..."}
+			<MapView initilaPosition={DEFAULT_POSITION} ref={setRef} />;
 		</div>
 	);
 };

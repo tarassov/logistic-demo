@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { LatLngExpression } from "leaflet";
 import { FC, useCallback } from "react";
 import useLogistic from "../../hooks/use-logistic";
@@ -32,7 +33,9 @@ const MapController: FC<{ map: L.Map }> = ({ map }) => {
 			latitude: {position?.lat.toFixed(4)}, longitude:{" "}
 			{position?.lng.toFixed(4)} <button onClick={onClick}>reset</button>
 			<button onClick={toBarcelona}>barcelona</button>
-			<button onClick={makeRoute}>makeRoute</button>
+			<Button type="primary" onClick={makeRoute}>
+				makeRoute
+			</Button>
 			<button onClick={makeRoute2}>makeRoute2</button>
 			{distance > 0 && `distance: ${distance?.toFixed(4)}`}
 		</p>
