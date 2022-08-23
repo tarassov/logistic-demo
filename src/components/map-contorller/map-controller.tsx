@@ -10,7 +10,7 @@ const from2: LatLngExpression = [51.44, 2.13];
 const to2: LatLngExpression = [51.55, 2.36];
 
 const MapController: FC<{ map: L.Map }> = ({ map }) => {
-	const { setRoutePoints, flyTo, position, distance } = useLogistic(map);
+	const { setRoutePoints, flyTo, position } = useLogistic(map);
 
 	const onClick = useCallback(() => {
 		flyTo(center);
@@ -37,7 +37,6 @@ const MapController: FC<{ map: L.Map }> = ({ map }) => {
 				makeRoute
 			</Button>
 			<button onClick={makeRoute2}>makeRoute2</button>
-			{distance > 0 && `distance: ${distance?.toFixed(4)}`}
 		</p>
 	);
 };

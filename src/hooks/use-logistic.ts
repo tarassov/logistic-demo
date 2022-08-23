@@ -2,15 +2,44 @@ import L from "leaflet";
 import { LatLngExpression } from "leaflet";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "leaflet-routing-machine";
+import { useAppDispatch, useAppSelector } from "../services/redux/store/store";
+import { setRoute, TRouteInfo } from "../services/redux/features/map-slice";
+import {
+	boundsToRouteInfoBounds,
+	routeInfoToBounds,
+} from "../services/utils/map-converters";
 const DEFAULT_ZOOM = 10;
-export default function useLogistic(map: L.Map) {
-	const [position, setPosition] = useState(() => map.getCenter());
+
+export default function useLogistic(map: L.Map | null) {
+	const [currentMap, setCurrentMap] = useState(map);
+	const [position, setPosition] = useState(() => map?.getCenter());
 	const [routePoints, setRoutePoints] = useState<Array<LatLngExpression>>();
-	const [distance, setDistance] = useState(0);
+	const { route } = useAppSelector((store) => store.map);
+
+	const dispatch = useAppDispatch();
+
+	const onNewRoute = useCallback(
+		(e: L.LeafletEvent) => {
+			if ("routes" in e) {
+				const route = (e as unknown as L.Routing.RoutingResultEvent).routes[0];
+				const bounds = L.Routing.line(route).getBounds();
+				const info: TRouteInfo = {
+					name: route.name,
+					bounds: boundsToRouteInfoBounds(bounds),
+					summary: {
+						totalDistance: route.summary?.totalDistance,
+						totalTime: route.summary?.totalTime,
+					},
+				};
+				dispatch(setRoute(info));
+			}
+		},
+		[currentMap]
+	);
 
 	//empty route
 	const routeControl = useMemo(() => {
-		return L.Routing.control({
+		const r = L.Routing.control({
 			waypoints: [],
 			show: false,
 			lineOptions: {
@@ -29,50 +58,54 @@ export default function useLogistic(map: L.Map) {
 			fitSelectedRoutes: "smart",
 			showAlternatives: false,
 		});
+		r.on("routesfound", onNewRoute);
+		return r;
 	}, []);
 
+	//track currentPosition
 	const onMove = useCallback(() => {
-		setPosition(map.getCenter());
-	}, [map]);
+		setPosition(currentMap?.getCenter());
+	}, [currentMap]);
 
+	//fix map size and fit route bounde after parent container has resized
+	const fixSize = useCallback(() => {
+		currentMap?.invalidateSize();
+		const routeBounds = routeInfoToBounds(route);
+		if (routeBounds) {
+			currentMap?.fitBounds(routeBounds);
+		}
+	}, [currentMap, route]);
+
+	//build the route when routePoints have changed
 	useEffect(() => {
 		if (routeControl && routePoints) {
 			routeControl.setWaypoints([
 				L.latLng(routePoints[0]),
 				L.latLng(routePoints[1]),
 			]);
-			routeControl.on("routesfound", onNewRoute);
-			routeControl?.addTo(map);
+			if (currentMap) routeControl?.addTo(currentMap);
 		}
 	}, [routePoints]);
 
+	//subscribe to map move
 	useEffect(() => {
-		map.on("move", onMove);
+		currentMap?.on("move", onMove);
 		return () => {
-			map.off("move", onMove);
+			currentMap?.off("move", onMove);
 		};
-	}, [map, onMove]);
-
-	const onNewRoute = useCallback(
-		(e: L.LeafletEvent) => {
-			if ("routes" in e) {
-				const route = (e as unknown as L.Routing.RoutingResultEvent).routes[0];
-				const summary = route.summary;
-				setDistance(summary?.totalDistance || 0);
-			}
-		},
-		[map]
-	);
+	}, [currentMap, onMove]);
 
 	const flyTo = (point: L.LatLngTuple) => {
-		map.flyTo(point, DEFAULT_ZOOM);
+		currentMap?.flyTo(point, DEFAULT_ZOOM);
 	};
 
 	return {
-		distance,
 		position,
 		routePoints,
 		flyTo,
 		setRoutePoints,
+		fixSize,
+		setCurrentMap,
+		currentMap,
 	};
 }
