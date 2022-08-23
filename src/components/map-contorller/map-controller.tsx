@@ -3,7 +3,11 @@ import { LatLngExpression } from "leaflet";
 import { FC, useCallback, useEffect } from "react";
 import useLogistic from "../../hooks/use-logistic";
 import { fetchOrders } from "../../services/redux/actions/orders-actions";
-import { useAppDispatch } from "../../services/redux/store/store";
+import { selectAllOrders } from "../../services/redux/features/orders-slice";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/redux/store/store";
 
 const center: LatLngExpression = [51.505, -0.09];
 const barcelona: LatLngExpression = [41.44, 2.13];
@@ -13,6 +17,7 @@ const to2: LatLngExpression = [51.55, 2.36];
 
 const MapController: FC<{ map: L.Map }> = ({ map }) => {
 	const { setRoutePoints, flyTo, position } = useLogistic(map);
+	const orders = useAppSelector(selectAllOrders);
 
 	const dispatch = useAppDispatch();
 	useEffect(() => {
@@ -44,6 +49,12 @@ const MapController: FC<{ map: L.Map }> = ({ map }) => {
 				makeRoute
 			</Button>
 			<button onClick={makeRoute2}>makeRoute2</button>
+			<div>
+				{orders &&
+					orders.map((order) => {
+						return <div key={order.id}>{order.number}</div>;
+					})}
+			</div>
 		</p>
 	);
 };

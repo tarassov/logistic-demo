@@ -53,7 +53,5 @@ const slice = createSlice({
 export const { f } = slice.actions;
 export default slice.reducer;
 
-export const {
-	selectAll: selectAllIngredients,
-	selectById: selectIngredientById,
-} = ordersAdapter.getSelectors<RootState>((state) => state.orders);
+export const { selectAll: selectAllOrders } =
+	ordersAdapter.getSelectors<RootState>((state) => state.orders);
