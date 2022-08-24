@@ -38,3 +38,14 @@ export const routeInfoToBounds = (
 	}
 	return undefined;
 };
+
+export const pointToString = (point: TPoint): string => {
+	let result = "";
+	if (point.country) result += point.country;
+	if (point.city) result = result ? result + `, ${point.city}` : point.city;
+	if (point.street)
+		result = result ? result + `, ${point.street}` : point.street;
+	if (point.building)
+		result = result ? result + `, ${point.building}` : point.building;
+	return result;
+};

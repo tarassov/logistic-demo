@@ -12,7 +12,7 @@ type TPoint = {
 
 type TOrder = {
 	id: number;
-	number: string;
-	from: TPoint;
-	to: TPoint;
+	number?: string;
+	from?: TPoint;
+	to?: TPoint;
 };

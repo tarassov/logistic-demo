@@ -1,9 +1,10 @@
-import { Button } from "antd";
+import { Button, Col, Row } from "antd";
 import { LatLngExpression } from "leaflet";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import useLogistic from "../../hooks/use-logistic";
 import { fetchOrders } from "../../services/redux/actions/orders-actions";
 import { selectAllOrders } from "../../services/redux/features/orders-slice";
+import { selectAllPoints } from "../../services/redux/features/points-slice";
 import {
 	useAppDispatch,
 	useAppSelector,
@@ -16,25 +17,10 @@ const to: LatLngExpression = [41.55, 2.36];
 const from2: LatLngExpression = [51.44, 2.13];
 const to2: LatLngExpression = [51.55, 2.36];
 
-const defaultColumns = [
-	{
-		title: "number",
-		dataIndex: "number",
-	},
-	{
-		title: "id",
-		dataIndex: "id",
-	},
-	{
-		title: "from",
-		dataIndex: "fromName",
-		editable: true,
-	},
-];
-
 const MapController: FC<{ map: L.Map }> = ({ map }) => {
 	const { setRoutePoints, flyTo, position } = useLogistic(map);
 	const orders = useAppSelector(selectAllOrders);
+	const points = useAppSelector(selectAllPoints);
 
 	const ordersData = useMemo(() => {
 		return orders.map((order) => {
@@ -42,11 +28,47 @@ const MapController: FC<{ map: L.Map }> = ({ map }) => {
 				key: order.id,
 				...order,
 				fromName: `${order?.from?.country}  ${order?.from?.street}`,
+				toName: `${order?.to?.country}  ${order?.to?.street}`,
 			};
 		});
 	}, [orders]);
 
+	const pointsData = useMemo(() => {
+		return points.map((point) => {
+			return {
+				id: point.id,
+				value: `${point?.country}  ${point?.street}`,
+			};
+		});
+	}, [points]);
+
+	const defaultColumns = useMemo(() => {
+		return [
+			{
+				title: "number",
+				dataIndex: "number",
+			},
+			{
+				title: "id",
+				dataIndex: "id",
+			},
+			{
+				title: "from",
+				dataIndex: "fromName",
+				editable: true,
+				source: pointsData,
+			},
+			{
+				title: "to",
+				dataIndex: "toName",
+				editable: true,
+				source: pointsData,
+			},
+		];
+	}, [pointsData]);
+
 	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		dispatch(fetchOrders());
 	}, []);
@@ -76,13 +98,16 @@ const MapController: FC<{ map: L.Map }> = ({ map }) => {
 				makeRoute
 			</Button>
 			<button onClick={makeRoute2}>makeRoute2</button>
-			<div>
-				{orders &&
-					orders.map((order) => {
-						return <div key={order.id}>{order.number}</div>;
-					})}
-			</div>
-			<EditableTable dataSource={ordersData} defaultColumns={defaultColumns} />
+			{/* <div
+				style={{
+					backgroundColor: "red",
+					width: "100%",
+					height: "500px",
+					overflowY: "scroll",
+				}}
+			>
+				dfgdf
+			</div> */}
 		</div>
 	);
 };

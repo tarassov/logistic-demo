@@ -6,6 +6,11 @@ const ordersApi = {
 			setTimeout(() => resolve(orders), 1500);
 		});
 	},
+	updateOrder: (order: TOrder) => {
+		return new Promise<TOrder>((resolve) => {
+			setTimeout(() => resolve(order), 1500);
+		});
+	},
 	getPoints: () => {
 		return new Promise<Array<TPoint>>((resolve) => {
 			setTimeout(() => resolve(points), 1500);

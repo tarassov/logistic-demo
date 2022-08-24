@@ -2,12 +2,12 @@ import {
 	createEntityAdapter,
 	createSlice,
 	EntityState,
-	PayloadAction,
 } from "@reduxjs/toolkit";
 import {
 	fetchOrders,
 	fetchOrdersFulfilled,
 	fetchOrdersRejected,
+	updateOrderFulfilled,
 } from "../actions/orders-actions";
 import { RootState } from "../store/store";
 
@@ -28,11 +28,7 @@ const initialState = ordersAdapter.getInitialState({
 const slice = createSlice({
 	name: "orders",
 	initialState: initialState,
-	reducers: {
-		f: (state, action: PayloadAction<Array<TOrder>>) => {
-			ordersAdapter.upsertMany(state, action.payload);
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchOrders, (state) => {
 			state.loading = true;
@@ -47,10 +43,12 @@ const slice = createSlice({
 			state.error = false;
 			ordersAdapter.upsertMany(state, action.payload);
 		});
+		builder.addCase(updateOrderFulfilled, (state, action) => {
+			ordersAdapter.upsertOne(state, action.payload);
+		});
 	},
 });
 
-export const { f } = slice.actions;
 export default slice.reducer;
 
 export const { selectAll: selectAllOrders } =
