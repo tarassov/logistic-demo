@@ -45,7 +45,7 @@ export default function useLogistic(map: L.Map | null) {
 			lineOptions: {
 				styles: [
 					{
-						color: "blue",
+						color: "#5618ff",
 						opacity: 0.6,
 						weight: 4,
 					},

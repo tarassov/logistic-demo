@@ -6,9 +6,10 @@ export const fetchOrdersFulfilled = createAction<Array<TOrder>>(
 	"orders/fetch/fulfilled"
 );
 
-export const updateOrderRequested = createAction<TOrder>(
-	"orders/update/pending"
-);
+export const updateOrderRequested = createAction<{
+	order: TOrder;
+	select: boolean;
+}>("orders/update/pending");
 export const updateOrderRejected = createAction("orders/update/rejected");
 export const updateOrderFulfilled = createAction<TOrder>(
 	"orders/update/fulfilled"

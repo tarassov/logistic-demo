@@ -1,4 +1,4 @@
-import { all, call, takeEvery, put, takeLatest } from "redux-saga/effects";
+import { all, call, takeEvery, put } from "redux-saga/effects";
 import apiGeo from "../../api/api-geo";
 import ordersApi from "../../api/mocked-api";
 import {
@@ -27,44 +27,50 @@ function* fetchOrdersSaga() {
 	}
 }
 
-function* updateOrder(action: { payload: TOrder; type: string }) {
+function* updateOrder(action: {
+	payload: { order: TOrder; select: boolean };
+	type: string;
+}) {
 	try {
 		const updatedOrder: TOrder = yield call(
 			ordersApi.updateOrder,
-			action.payload
+			action.payload.order
 		);
 		yield put(updateOrderFulfilled(updatedOrder));
+		if (action.payload.select) yield put(selectOrderRequested(updatedOrder));
 	} catch (e) {
 		yield put(updateOrderRejected());
 	}
 }
 
-function* fetchCoordinates(action: { payload: TOrder; type: string }) {
+function* selectOrder(action: { payload: TOrder; type: string }) {
 	try {
 		if (action.payload.from && action.payload.to) {
-			const result: Array<Array<TLocationResponse>> = yield all([
-				call(apiGeo.getByPoint, action.payload.from),
-				call(apiGeo.getByPoint, action.payload.to),
-			]);
-			if (!result[0].length || !result[1].length) {
-				yield put(selectOrderRejected());
+			//fetch coordiantes if necessary
+			if (!action.payload.from.lat || !action.payload.to.lat) {
+				const result: Array<Array<TLocationResponse>> = yield all([
+					call(apiGeo.getByPoint, action.payload.from),
+					call(apiGeo.getByPoint, action.payload.to),
+				]);
+				if (!result[0].length || !result[1].length) {
+					yield put(selectOrderRejected());
+				} else {
+					const from = {
+						...action.payload.from,
+						lat: result[0][0].lat,
+						lon: result[0][0].lon,
+					};
+					const to = {
+						...action.payload.to,
+						lat: result[1][0].lat,
+						lon: result[1][0].lon,
+					};
+					yield put(
+						selectOrderFulfilled({ ...action.payload, from: from, to: to })
+					);
+				}
 			} else {
-				const from = {
-					...action.payload.from,
-					lat: result[0][0].lat,
-					lon: result[0][0].lon,
-				};
-				const to = {
-					...action.payload.to,
-					lat: result[1][0].lat,
-					lon: result[1][0].lon,
-				};
-				yield put(
-					updateOrderFulfilled({ ...action.payload, from: from, to: to })
-				);
-				yield put(
-					selectOrderFulfilled({ ...action.payload, from: from, to: to })
-				);
+				yield put(selectOrderFulfilled(action.payload));
 			}
 		}
 	} catch (e) {
@@ -75,11 +81,11 @@ function* fetchCoordinates(action: { payload: TOrder; type: string }) {
 export default function* rootSaga() {
 	yield takeEvery(fetchOrders.toString(), fetchOrdersSaga);
 	yield takeEvery<{
-		payload: TOrder;
+		payload: { order: TOrder; select: boolean };
 		type: string;
 	}>(updateOrderRequested.toString(), updateOrder);
 	yield takeEvery<{
 		payload: TOrder;
 		type: string;
-	}>(selectOrderRequested.toString(), fetchCoordinates);
+	}>(selectOrderRequested.toString(), selectOrder);
 }

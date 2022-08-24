@@ -9,6 +9,7 @@ import {
 	fetchOrdersRejected,
 	selectOrderFulfilled,
 	selectOrderRejected,
+	selectOrderRequested,
 	updateOrderFulfilled,
 } from "../actions/orders-actions";
 import { RootState } from "../store/store";
@@ -16,7 +17,7 @@ import { RootState } from "../store/store";
 export interface IOrdersState extends EntityState<TOrder> {
 	loading: boolean;
 	error: boolean;
-	selectedOrder: TOrder | null;
+	selectedOrderId: number | null;
 }
 
 export const ordersAdapter = createEntityAdapter<TOrder>({
@@ -26,7 +27,7 @@ export const ordersAdapter = createEntityAdapter<TOrder>({
 const initialState = ordersAdapter.getInitialState({
 	loading: false,
 	error: false,
-	selectedOrder: null,
+	selectedOrderId: null,
 }) as IOrdersState;
 
 const slice = createSlice({
@@ -51,15 +52,21 @@ const slice = createSlice({
 			ordersAdapter.upsertOne(state, action.payload);
 		});
 		builder.addCase(selectOrderFulfilled, (state, action) => {
-			state.selectedOrder = action.payload;
+			state.selectedOrderId = action.payload.id;
+			ordersAdapter.upsertOne(state, action.payload);
+			state.loading = false;
 		});
 		builder.addCase(selectOrderRejected, (state) => {
-			state.selectedOrder = null;
+			state.selectedOrderId = null;
+			state.loading = false;
+		});
+		builder.addCase(selectOrderRequested, (state) => {
+			state.loading = true;
 		});
 	},
 });
 
 export default slice.reducer;
 
-export const { selectAll: selectAllOrders } =
+export const { selectAll: selectAllOrders, selectById: selectOrderById } =
 	ordersAdapter.getSelectors<RootState>((state) => state.orders);

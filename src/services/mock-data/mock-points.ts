@@ -23,6 +23,18 @@ export const points: Array<TPoint> = [
 		city: "Paris",
 		street: "Notre Dame De Paris",
 	},
+	{
+		id: 5,
+		country: "ES",
+		city: "Malaga",
+		street: "Calle Barroso 1",
+	},
+	{
+		id: 6,
+		country: "ES",
+		city: "Pineda de mar",
+		street: "",
+	},
 ];
 
 export const orders: Array<TOrder> = [

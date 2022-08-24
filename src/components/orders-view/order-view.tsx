@@ -6,7 +6,10 @@ import {
 	selectOrderRequested,
 	updateOrderRequested,
 } from "../../services/redux/actions/orders-actions";
-import { selectAllOrders } from "../../services/redux/features/orders-slice";
+import {
+	selectAllOrders,
+	selectOrderById,
+} from "../../services/redux/features/orders-slice";
 import { selectAllPoints } from "../../services/redux/features/points-slice";
 import EditableTable from "../table/editable-table";
 import {
@@ -20,11 +23,18 @@ import type { NotificationPlacement } from "antd/lib/notification";
 const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	const orders = useAppSelector(selectAllOrders);
 	const points = useAppSelector(selectAllPoints);
-	const selectedOrder = useAppSelector((store) => store.orders.selectedOrder);
+	const selectedOrderId = useAppSelector(
+		(store) => store.orders.selectedOrderId || ""
+	);
 
 	const { setRoutePoints } = useLogistic(map);
 
+	const selectedOrder = useAppSelector((store) =>
+		selectOrderById(store, selectedOrderId)
+	);
+
 	useEffect(() => {
+		console.log(selectedOrder);
 		if (
 			selectedOrder?.from?.lat &&
 			selectedOrder?.from?.lon &&
@@ -43,7 +53,7 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 		} else {
 			setRoutePoints([]);
 		}
-	}, [selectedOrder?.to, selectedOrder?.from]);
+	}, [selectedOrder]);
 
 	const pointsData = useMemo(() => {
 		return points.map((point) => {
@@ -102,9 +112,14 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 					"warning"
 				);
 			}
-			dispatch(updateOrderRequested(order));
+			dispatch(
+				updateOrderRequested({
+					order: order,
+					select: order.id === selectedOrderId,
+				})
+			);
 		},
-		[dispatch]
+		[dispatch, selectedOrderId]
 	);
 
 	const onRowSelected = useCallback(
