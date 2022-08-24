@@ -7,6 +7,7 @@ import {
 	updateOrderRequested,
 } from "../../services/redux/actions/orders-actions";
 import {
+	addOrder,
 	selectAllOrders,
 	selectOrderById,
 } from "../../services/redux/features/orders-slice";
@@ -34,7 +35,6 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	);
 
 	useEffect(() => {
-		console.log(selectedOrder);
 		if (
 			selectedOrder?.from?.lat &&
 			selectedOrder?.from?.lon &&
@@ -122,6 +122,10 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 		[dispatch, selectedOrderId]
 	);
 
+	const onAdd = useCallback(() => {
+		dispatch(addOrder());
+	}, [dispatch]);
+
 	const onRowSelected = useCallback(
 		(order: TOrder) => {
 			dispatch(selectOrderRequested(order));
@@ -139,6 +143,7 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 				dataSource={orders}
 				defaultColumns={defaultColumns}
 				onSave={onSave}
+				onAdd={onAdd}
 				onRowSelected={onRowSelected}
 			/>
 		</>

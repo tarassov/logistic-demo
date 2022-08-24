@@ -21,6 +21,7 @@ type TEditableTableProps = {
 	}>;
 	onSave: { (record: Record<string, unknown> & { id: number }): void };
 	onRowSelected: { (record: Record<string, unknown> & { id: number }): void };
+	onAdd?: { (): void };
 };
 
 const EditableTable: FC<TEditableTableProps> = ({
@@ -28,6 +29,7 @@ const EditableTable: FC<TEditableTableProps> = ({
 	defaultColumns,
 	onSave,
 	onRowSelected,
+	onAdd,
 }) => {
 	const columns = defaultColumns.map((col) => {
 		if (!col.editable) {
@@ -53,7 +55,7 @@ const EditableTable: FC<TEditableTableProps> = ({
 	};
 
 	const handleAdd = () => {
-		console.debug("add new row");
+		onAdd && onAdd();
 	};
 
 	const components = {

@@ -1,0 +1,38 @@
+.layout {
+	height: 100vh;
+	weight: 100vh;
+	position: relative
+}
+
+.content {
+	margin: 5px 20px 5px 20px;
+	padding: 0 50px;
+	height: 80vh;
+	position: relative
+}
+
+.header {
+	color: #d9d9d9;
+}
+
+.footer {
+	margin: auto;
+}
+
+.splitPane {
+	position: absolute;
+	top: 0 ||
+		/* auto-calculated by SplitPane */
+	;
+	left: 0 ||
+		/* auto-calculated by SplitPane */
+	;
+	overflow: auto;
+	height: 100%;
+	width: 100%
+		/* total height of preceding siblings */
+}
+
+.ordersList {
+	margin: 10px;
+}

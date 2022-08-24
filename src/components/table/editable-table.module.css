@@ -1,9 +1,4 @@
 .container {
 	overflow: auto;
-	width: 100%;
-	height: 500px
-}
 
-.editableTable {
-	width: 100%;
 }

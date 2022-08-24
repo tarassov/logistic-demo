@@ -1,9 +1,8 @@
 .container {
 	width: 100%;
-	height: 100%;
 }
 
 .logisticMap {
-	height: 100%;
-	width: 100%;
+	margin: 10px;
+	height: calc(100% - 20px);
 }

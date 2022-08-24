@@ -33,7 +33,18 @@ const initialState = ordersAdapter.getInitialState({
 const slice = createSlice({
 	name: "orders",
 	initialState: initialState,
-	reducers: {},
+	reducers: {
+		addOrder: (state) => {
+			const id = state.ids.length + 1;
+			const newOrder: TOrder = {
+				id: id,
+				number: `order N${id}`,
+				from: { id: 0, country: "" },
+				to: { id: 0, country: "" },
+			};
+			ordersAdapter.upsertOne(state, newOrder);
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchOrders, (state) => {
 			state.loading = true;
@@ -67,6 +78,7 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
+export const { addOrder } = slice.actions;
 
 export const { selectAll: selectAllOrders, selectById: selectOrderById } =
 	ordersAdapter.getSelectors<RootState>((state) => state.orders);

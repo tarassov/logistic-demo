@@ -53,7 +53,7 @@ function* selectOrder(action: { payload: TOrder; type: string }) {
 					call(apiGeo.getByPoint, action.payload.to),
 				]);
 				if (!result[0].length || !result[1].length) {
-					yield put(selectOrderRejected());
+					yield put(selectOrderFulfilled(action.payload));
 				} else {
 					const from = {
 						...action.payload.from,

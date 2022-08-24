@@ -4,11 +4,9 @@ import MainView from "../main-view/main-view";
 
 function App() {
 	return (
-		<div className="App">
-			<Provider store={store}>
-				<MainView />
-			</Provider>
-		</div>
+		<Provider store={store}>
+			<MainView />
+		</Provider>
 	);
 }
 

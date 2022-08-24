@@ -58,7 +58,7 @@ h5,
 h6 {
   margin-top: 0;
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
 }
 p {
@@ -1339,11 +1339,11 @@ html {
 .ant-alert-with-description .ant-alert-message {
   display: block;
   margin-bottom: 4px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 16px;
 }
 .ant-alert-message {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
 }
 .ant-alert-with-description .ant-alert-description {
   display: block;
@@ -4281,7 +4281,7 @@ a.ant-btn-sm {
   min-height: 48px;
   margin-bottom: -1px;
   padding: 0 24px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   font-size: 16px;
   background: transparent;
@@ -4523,7 +4523,7 @@ a.ant-btn-sm {
 }
 .ant-card-meta-title {
   overflow: hidden;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   font-size: 16px;
   white-space: nowrap;
@@ -5374,7 +5374,7 @@ a.ant-btn-sm {
   flex-wrap: nowrap;
   align-items: flex-start;
   padding: 12px 16px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   line-height: 1.5715;
   cursor: pointer;
   transition: all 0.3s, visibility 0s;
@@ -6064,7 +6064,7 @@ textarea.ant-picker-input > input {
 .ant-picker-header {
   display: flex;
   padding: 0 8px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   border-bottom: 1px solid #f0f0f0;
 }
 .ant-picker-header > * {
@@ -6681,7 +6681,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-descriptions-title {
   flex: auto;
   overflow: hidden;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: bold;
   font-size: 16px;
   line-height: 1.5715;
@@ -6709,7 +6709,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   border-bottom: none;
 }
 .ant-descriptions-item-label {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: normal;
   font-size: 14px;
   line-height: 1.5715;
@@ -6840,7 +6840,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-divider-horizontal.ant-divider-with-text {
   display: flex;
   margin: 16px 0;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   font-size: 16px;
   white-space: nowrap;
@@ -7042,7 +7042,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
 .ant-drawer-title {
   flex: 1;
   margin: 0;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
@@ -7968,7 +7968,7 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   align-items: center;
   max-width: 100%;
   height: 32px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 14px;
 }
 .ant-form-item-label > label > .anticon {
@@ -15646,7 +15646,7 @@ textarea.ant-input-number {
 }
 .ant-list-vertical .ant-list-item-meta-title {
   margin-bottom: 12px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 16px;
   line-height: 24px;
 }
@@ -17136,7 +17136,7 @@ textarea.ant-mentions {
 }
 .ant-modal-title {
   margin: 0;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
@@ -17263,7 +17263,7 @@ textarea.ant-mentions {
 .ant-modal-confirm-body .ant-modal-confirm-title {
   display: block;
   overflow: hidden;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.4;
@@ -17385,7 +17385,7 @@ textarea.ant-mentions {
 }
 .ant-notification-notice-message {
   margin-bottom: 8px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 16px;
   line-height: 24px;
 }
@@ -17643,7 +17643,7 @@ textarea.ant-mentions {
 .ant-page-header-heading-title {
   margin-right: 12px;
   margin-bottom: 0;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 600;
   font-size: 20px;
   line-height: 32px;
@@ -18336,7 +18336,7 @@ textarea.ant-pagination-options-quick-jumper input {
   min-height: 32px;
   margin: 0;
   padding: 5px 16px 4px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -19231,7 +19231,7 @@ span.ant-radio + * {
   font-size: 72px;
 }
 .ant-result-title {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 24px;
   line-height: 1.8;
   text-align: center;
@@ -20794,7 +20794,7 @@ span.ant-radio + * {
   padding-top: 16px;
 }
 .ant-statistic-content {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 24px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
@@ -20956,7 +20956,7 @@ span.ant-radio + * {
   background: #5618ff;
 }
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
 }
 .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
   background-color: #f0f0f0;
@@ -21936,12 +21936,12 @@ span.ant-radio + * {
 }
 .ant-table-footer {
   padding: 16px 16px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   background: #fafafa;
 }
 .ant-table-thead > tr > th {
   position: relative;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 500;
   text-align: left;
   background: #fafafa;
@@ -23120,7 +23120,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   transition: all 0.3s;
 }
 .ant-tabs-tab-remove:hover {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
 }
 .ant-tabs-tab:hover {
   color: #7940ff;
@@ -23206,7 +23206,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   transition: all 0.3s;
 }
 .ant-tag-close-icon:hover {
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
 }
 .ant-tag-has-color {
   border-color: transparent;
@@ -25203,7 +25203,7 @@ div.ant-typography-h1,
 div.ant-typography-h1 > textarea,
 .ant-typography h1 {
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 600;
   font-size: 38px;
   line-height: 1.23;
@@ -25213,7 +25213,7 @@ div.ant-typography-h2,
 div.ant-typography-h2 > textarea,
 .ant-typography h2 {
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 600;
   font-size: 30px;
   line-height: 1.35;
@@ -25223,7 +25223,7 @@ div.ant-typography-h3,
 div.ant-typography-h3 > textarea,
 .ant-typography h3 {
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 600;
   font-size: 24px;
   line-height: 1.35;
@@ -25233,7 +25233,7 @@ div.ant-typography-h4,
 div.ant-typography-h4 > textarea,
 .ant-typography h4 {
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 600;
   font-size: 20px;
   line-height: 1.4;
@@ -25243,7 +25243,7 @@ div.ant-typography-h5,
 div.ant-typography-h5 > textarea,
 .ant-typography h5 {
   margin-bottom: 0.5em;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-weight: 600;
   font-size: 16px;
   line-height: 1.5;
@@ -25623,7 +25623,7 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-upload.ant-upload-drag p.ant-upload-text {
   margin: 0 0 4px;
-  color: rgba(0, 0, 0, 0.85);
+  color: #d9d9d9;
   font-size: 16px;
 }
 .ant-upload.ant-upload-drag p.ant-upload-hint {
