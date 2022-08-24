@@ -55,7 +55,7 @@ export default function useLogistic(map: L.Map | null) {
 				missingRouteTolerance: 1,
 			},
 			addWaypoints: false,
-			fitSelectedRoutes: "smart",
+			fitSelectedRoutes: true,
 			showAlternatives: false,
 		});
 		r.on("routesfound", onNewRoute);

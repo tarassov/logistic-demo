@@ -41,7 +41,7 @@ export const orders: Array<TOrder> = [
 	{
 		id: 3,
 		number: "order 3",
-		from: points[4],
+		from: points[3],
 		to: points[1],
 	},
 ];
