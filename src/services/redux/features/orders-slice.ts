@@ -16,6 +16,7 @@ import { RootState } from "../store/store";
 
 export interface IOrdersState extends EntityState<TOrder> {
 	loading: boolean;
+	fetchingCoordinates: boolean;
 	error: boolean;
 	selectedOrderId: number | null;
 }
@@ -26,6 +27,7 @@ export const ordersAdapter = createEntityAdapter<TOrder>({
 
 const initialState = ordersAdapter.getInitialState({
 	loading: false,
+	fetchingCoordinates: false,
 	error: false,
 	selectedOrderId: null,
 }) as IOrdersState;
@@ -66,13 +68,16 @@ const slice = createSlice({
 			state.selectedOrderId = action.payload.id;
 			ordersAdapter.upsertOne(state, action.payload);
 			state.loading = false;
+			state.fetchingCoordinates = false;
 		});
 		builder.addCase(selectOrderRejected, (state) => {
 			state.selectedOrderId = null;
 			state.loading = false;
+			state.fetchingCoordinates = false;
 		});
 		builder.addCase(selectOrderRequested, (state) => {
 			state.loading = true;
+			state.fetchingCoordinates = true;
 		});
 	},
 });

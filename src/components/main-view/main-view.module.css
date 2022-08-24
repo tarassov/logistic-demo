@@ -21,17 +21,13 @@
 
 .splitPane {
 	position: absolute;
-	top: 0 ||
-		/* auto-calculated by SplitPane */
-	;
-	left: 0 ||
-		/* auto-calculated by SplitPane */
-	;
+	top: 0;
+	left: 0;
 	overflow: auto;
 	height: 100%;
 	width: 100%
-		/* total height of preceding siblings */
 }
+
 
 .ordersList {
 	margin: 10px;

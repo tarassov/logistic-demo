@@ -71,7 +71,7 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 				dataIndex: "number",
 			},
 			{
-				title: "from",
+				title: "Depature point",
 				dataIndex: "from",
 				editable: true,
 				render: (order: TOrder) =>
@@ -79,7 +79,7 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 				source: pointsData,
 			},
 			{
-				title: "to",
+				title: "Destination point",
 				dataIndex: "to",
 				render: (order: TOrder) => (order.to ? pointToString(order.to) : ""),
 				editable: true,
