@@ -24,3 +24,5 @@ type TLocationResponse = Record<string, unknown> & {
 	boundingbox: Array<number>;
 	display_name: string;
 };
+
+type TNotificationType = "success" | "info" | "warning" | "error";

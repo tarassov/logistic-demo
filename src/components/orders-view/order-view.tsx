@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import useLogistic from "../../hooks/use-logistic";
 import {
@@ -14,13 +15,14 @@ import {
 } from "../../services/redux/store/store";
 import { pointToString } from "../../services/utils/map-converters";
 import { LatLngExpression } from "leaflet";
+import type { NotificationPlacement } from "antd/lib/notification";
 
 const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	const orders = useAppSelector(selectAllOrders);
 	const points = useAppSelector(selectAllPoints);
 	const selectedOrder = useAppSelector((store) => store.orders.selectedOrder);
 
-	const { setRoutePoints, flyTo, position } = useLogistic(map);
+	const { setRoutePoints } = useLogistic(map);
 
 	useEffect(() => {
 		if (
@@ -77,9 +79,29 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	}, [pointsData, orders]);
 
 	const dispatch = useAppDispatch();
+	const openNotification = (
+		placement: NotificationPlacement,
+		message: string,
+		description: string,
+		type: TNotificationType
+	) => {
+		notification[type]({
+			message: message,
+			description: description,
+			placement,
+		});
+	};
 
 	const onSave = useCallback(
 		(order: TOrder) => {
+			if (order.from?.id === order.to?.id) {
+				openNotification(
+					"bottom",
+					"Warning",
+					"Departure and destination points should be different",
+					"warning"
+				);
+			}
 			dispatch(updateOrderRequested(order));
 		},
 		[dispatch]
