@@ -9,7 +9,7 @@ export const points: Array<TPoint> = [
 		id: 2,
 		country: "ES",
 		city: "Barcelona",
-		street: "El parque Guell",
+		street: "Sagrada de Familia",
 	},
 	{
 		id: 3,

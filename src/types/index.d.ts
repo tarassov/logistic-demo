@@ -16,3 +16,11 @@ type TOrder = {
 	from?: TPoint;
 	to?: TPoint;
 };
+
+type TLocationResponse = Record<string, unknown> & {
+	place_id: number;
+	lat: number;
+	lon: number;
+	boundingbox: Array<number>;
+	display_name: string;
+};

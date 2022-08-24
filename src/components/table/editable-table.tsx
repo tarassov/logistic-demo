@@ -20,12 +20,14 @@ type TEditableTableProps = {
 		render?: { (record: Record<string, unknown> & { id: number }): string };
 	}>;
 	onSave: { (record: Record<string, unknown> & { id: number }): void };
+	onRowSelected: { (record: Record<string, unknown> & { id: number }): void };
 };
 
 const EditableTable: FC<TEditableTableProps> = ({
 	dataSource,
 	defaultColumns,
 	onSave,
+	onRowSelected,
 }) => {
 	const columns = defaultColumns.map((col) => {
 		if (!col.editable) {
@@ -60,6 +62,14 @@ const EditableTable: FC<TEditableTableProps> = ({
 			cell: EditableCell,
 		},
 	};
+	const rowSelection = {
+		onChange: (
+			selectedRowKeys: React.Key[],
+			selectedRows: Array<Record<string, unknown> & { id: number }>
+		) => {
+			onRowSelected(selectedRows[0]);
+		},
+	};
 
 	return (
 		<div className={styles.container}>
@@ -73,6 +83,11 @@ const EditableTable: FC<TEditableTableProps> = ({
 				Add a row
 			</Button>
 			<Table
+				rowKey={(record: Record<string, unknown> & { id: number }) => record.id}
+				rowSelection={{
+					type: "radio",
+					onChange: rowSelection.onChange,
+				}}
 				className={styles.editableTable}
 				components={components}
 				rowClassName={() => "editable-row"}

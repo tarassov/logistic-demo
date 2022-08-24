@@ -7,6 +7,8 @@ import {
 	fetchOrders,
 	fetchOrdersFulfilled,
 	fetchOrdersRejected,
+	selectOrderFulfilled,
+	selectOrderRejected,
 	updateOrderFulfilled,
 } from "../actions/orders-actions";
 import { RootState } from "../store/store";
@@ -14,6 +16,7 @@ import { RootState } from "../store/store";
 export interface IOrdersState extends EntityState<TOrder> {
 	loading: boolean;
 	error: boolean;
+	selectedOrder: TOrder | null;
 }
 
 export const ordersAdapter = createEntityAdapter<TOrder>({
@@ -23,6 +26,7 @@ export const ordersAdapter = createEntityAdapter<TOrder>({
 const initialState = ordersAdapter.getInitialState({
 	loading: false,
 	error: false,
+	selectedOrder: null,
 }) as IOrdersState;
 
 const slice = createSlice({
@@ -45,6 +49,12 @@ const slice = createSlice({
 		});
 		builder.addCase(updateOrderFulfilled, (state, action) => {
 			ordersAdapter.upsertOne(state, action.payload);
+		});
+		builder.addCase(selectOrderFulfilled, (state, action) => {
+			state.selectedOrder = action.payload;
+		});
+		builder.addCase(selectOrderRejected, (state) => {
+			state.selectedOrder = null;
 		});
 	},
 });

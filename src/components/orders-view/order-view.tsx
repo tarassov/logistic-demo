@@ -1,7 +1,8 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import useLogistic from "../../hooks/use-logistic";
 import {
 	fetchOrders,
+	selectOrderRequested,
 	updateOrderRequested,
 } from "../../services/redux/actions/orders-actions";
 import { selectAllOrders } from "../../services/redux/features/orders-slice";
@@ -12,21 +13,35 @@ import {
 	useAppSelector,
 } from "../../services/redux/store/store";
 import { pointToString } from "../../services/utils/map-converters";
+import { LatLngExpression } from "leaflet";
 
 const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	const orders = useAppSelector(selectAllOrders);
 	const points = useAppSelector(selectAllPoints);
+	const selectedOrder = useAppSelector((store) => store.orders.selectedOrder);
 
 	const { setRoutePoints, flyTo, position } = useLogistic(map);
 
-	const ordersData = useMemo(() => {
-		return orders.map((order) => {
-			return {
-				key: order.id,
-				...order,
-			};
-		});
-	}, [orders]);
+	useEffect(() => {
+		if (
+			selectedOrder?.from?.lat &&
+			selectedOrder?.from?.lon &&
+			selectedOrder?.to?.lat &&
+			selectedOrder?.to?.lon
+		) {
+			const from: LatLngExpression = [
+				selectedOrder?.from?.lat,
+				selectedOrder?.from?.lon,
+			];
+			const to: LatLngExpression = [
+				selectedOrder?.to?.lat,
+				selectedOrder?.to?.lon,
+			];
+			setRoutePoints([from, to]);
+		} else {
+			setRoutePoints([]);
+		}
+	}, [selectedOrder?.to, selectedOrder?.from]);
 
 	const pointsData = useMemo(() => {
 		return points.map((point) => {
@@ -40,12 +55,8 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	const defaultColumns = useMemo(() => {
 		return [
 			{
-				title: "number",
+				title: "Order number",
 				dataIndex: "number",
-			},
-			{
-				title: "id",
-				dataIndex: "id",
 			},
 			{
 				title: "from",
@@ -67,9 +78,19 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 
 	const dispatch = useAppDispatch();
 
-	const onSave = (order: TOrder) => {
-		dispatch(updateOrderRequested(order));
-	};
+	const onSave = useCallback(
+		(order: TOrder) => {
+			dispatch(updateOrderRequested(order));
+		},
+		[dispatch]
+	);
+
+	const onRowSelected = useCallback(
+		(order: TOrder) => {
+			dispatch(selectOrderRequested(order));
+		},
+		[dispatch]
+	);
 
 	useEffect(() => {
 		dispatch(fetchOrders());
@@ -78,9 +99,10 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 	return (
 		<>
 			<EditableTable
-				dataSource={ordersData}
+				dataSource={orders}
 				defaultColumns={defaultColumns}
 				onSave={onSave}
+				onRowSelected={onRowSelected}
 			/>
 		</>
 	);

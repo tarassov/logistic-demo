@@ -13,3 +13,11 @@ export const updateOrderRejected = createAction("orders/update/rejected");
 export const updateOrderFulfilled = createAction<TOrder>(
 	"orders/update/fulfilled"
 );
+
+export const selectOrderRequested = createAction<TOrder>(
+	"orders/select/pending"
+);
+export const selectOrderRejected = createAction("orders/select/rejected");
+export const selectOrderFulfilled = createAction<TOrder>(
+	"orders/select/fulfilled"
+);

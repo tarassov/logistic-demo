@@ -47,8 +47,6 @@ const EditableCell: FC<TEditableCell> = (props) => {
 	};
 
 	useEffect(() => {
-		console.log(record);
-		if (render) console.log(render(record));
 		if (editable) {
 			form?.setFieldsValue({
 				[dataIndex]: render ? render(record) : "",
@@ -56,25 +54,12 @@ const EditableCell: FC<TEditableCell> = (props) => {
 		}
 	}, [record, editable]);
 
-	// const save = async () => {
-	// 	try {
-	// 		const values = await form?.validateFields();
-	// 		toggleEdit();
-	// 		handleSave({ ...record, ...values });
-	// 	} catch (errInfo) {
-	// 		console.log("Save failed:", errInfo);
-	// 	}
-	// };
-
 	let childNode = children;
 
-	const onChange = (value: any) => {
-		record[dataIndex] = source.filter((s) => s.id == value)[0];
-		handleSave(record);
-	};
-
-	const onSearch = (value: any) => {
-		console.log("search:", value);
+	const onChange = (value: number) => {
+		const newValue = { ...record };
+		newValue[dataIndex] = source.filter((s) => s.id == value)[0];
+		handleSave(newValue);
 	};
 
 	if (editable) {
@@ -96,7 +81,6 @@ const EditableCell: FC<TEditableCell> = (props) => {
 					placeholder="Select a value..."
 					optionFilterProp="children"
 					onChange={onChange}
-					onSearch={onSearch}
 					ref={inputRef}
 					filterOption={(input, option) => {
 						return option?.children

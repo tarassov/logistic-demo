@@ -1,6 +1,6 @@
 import axios, { AxiosError, type AxiosResponse } from "axios";
 
-const BASE_URL = "https://api.openweathermap.org/";
+const BASE_URL = "https://nominatim.openstreetmap.org/";
 
 axios.defaults.baseURL = BASE_URL;
 
@@ -24,7 +24,7 @@ const handleErrors = (e: AxiosError) => {
 
 export const get = <ResponseType>(endpoint: string): Promise<ResponseType> => {
 	return instance
-		.get<ResponseType>(`${endpoint}}`, {
+		.get<ResponseType>(`${endpoint}`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
