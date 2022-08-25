@@ -24,7 +24,7 @@ const MainView = () => {
 		<>
 			<Layout className={styles.layout}>
 				<Header className={styles.header}>
-					<h2>Demo logistic</h2>
+					<h2>Demo logistics</h2>
 				</Header>
 				<Content className={styles.content}>
 					<SplitPane
@@ -42,7 +42,7 @@ const MainView = () => {
 						</div>
 					</SplitPane>
 				</Content>
-				<Footer className={styles.footer}>Demo logistic</Footer>
+				<Footer className={styles.footer}>Demo logistics</Footer>
 			</Layout>
 			<Modal
 				className={styles.modal}

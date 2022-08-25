@@ -18,7 +18,7 @@ const MapView = React.forwardRef<
 			ref={ref}
 		>
 			<TileLayer
-				attribution="Demo logistic"
+				attribution="Demo logistics"
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 			/>
 		</MapContainer>
