@@ -7,7 +7,7 @@ It is possible to create a new route using preloaded points of destination and p
 
 Coordinates are fetching from the [nominatim](https://nominatim.openstreetmap.org)
 
-Orders and points are mocked [here](https://github.com/tarassov/weather-widget/blob/master/src/services/mock-data/mokc-points.ts)
+Orders and points are mocked [here](https://github.com/tarassov/logistic-demo/blob/master/src/services/mock-data/mock-points.ts)
 
 &nbsp;
 
@@ -31,7 +31,7 @@ This application uses OSRM's demo server for demo purposes and it is **NOT SUITA
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)+ [Eslint](https://marketplace.visualstudio.com/items?itemName=Eslint).
+[VSCode](https://code.visualstudio.com/) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)+ [Eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
 ## Project Setup
 
