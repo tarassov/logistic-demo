@@ -5,13 +5,13 @@ Demo logistic applicaiton.
 Application allows you to select one of the existing preloaded routes and shows it on the map.
 It is possible to create new route using preloaded point of destination and point of departure.
 
-Coordinates are fetching from [nominatim](https://nominatim.openstreetmap.org)
+Coordinates are fetching from the [nominatim](https://nominatim.openstreetmap.org)
 
 Orders and points are mocked [here](https://github.com/tarassov/weather-widget/blob/master/src/services/mock-data/mokc-points.ts)
 
 &nbsp;
 
-<img src="https://github.com/tarassov/weather-widget/raw/master/example/demo-logistic.png" width="300">
+<img src="https://github.com/tarassov/logistic-demo/raw/master/example/demo-logistic.png" width="300">
 
 ## DEMO: You can find the demo [HERE](https://tarassov.github.io/demo-logistic/)
 
