@@ -11,6 +11,8 @@ import {
 	selectOrderRejected,
 	selectOrderRequested,
 	updateOrderFulfilled,
+	updateOrderRejected,
+	updateOrderRequested,
 } from "../actions/orders-actions";
 import { RootState } from "../store/store";
 
@@ -61,8 +63,15 @@ const slice = createSlice({
 			state.error = false;
 			ordersAdapter.upsertMany(state, action.payload);
 		});
+		builder.addCase(updateOrderRequested, (state, action) => {
+			state.loading = true;
+		});
+		builder.addCase(updateOrderRejected, (state, action) => {
+			state.loading = false;
+		});
 		builder.addCase(updateOrderFulfilled, (state, action) => {
 			ordersAdapter.upsertOne(state, action.payload);
+			state.loading = false;
 		});
 		builder.addCase(selectOrderFulfilled, (state, action) => {
 			state.selectedOrderId = action.payload.id;

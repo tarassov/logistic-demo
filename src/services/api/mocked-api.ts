@@ -8,7 +8,7 @@ const ordersApi = {
 	},
 	updateOrder: (order: TOrder) => {
 		return new Promise<TOrder>((resolve) => {
-			setTimeout(() => resolve(order), 1500);
+			setTimeout(() => resolve(order), 1000);
 		});
 	},
 	getPoints: () => {
