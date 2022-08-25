@@ -13,7 +13,7 @@ Orders and points are mocked [here](https://github.com/tarassov/weather-widget/b
 
 <img src="https://github.com/tarassov/logistic-demo/raw/master/example/demo-logistic.png" width="300">
 
-## DEMO: You can find the demo [HERE](https://tarassov.github.io/demo-logistic/)
+## DEMO: You can find the demo [HERE](https://tarassov.github.io/logistic-demo/)
 
 &nbsp;
 
