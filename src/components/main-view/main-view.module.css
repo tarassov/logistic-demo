@@ -32,3 +32,34 @@
 .ordersList {
 	margin: 10px;
 }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+	.content {
+		margin: 5px 5px 5px 5px;
+		padding: 0 10px;
+		height: 80vh;
+		position: relative
+	}
+
+	.footer,
+	.header {
+		display: none
+	}
+
+}
+
+
+@media only screen and (min-device-height: 320px) and (max-device-height: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+	.content {
+		margin: 5px 5px 5px 5px;
+		padding: 0 10px;
+		height: 80vh;
+		position: relative
+	}
+
+	.footer,
+	.header {
+		display: none
+	}
+
+}

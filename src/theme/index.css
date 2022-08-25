@@ -12,6 +12,7 @@
   z-index: 1;
   box-sizing: border-box;
   background-clip: padding-box;
+  touch-action: none;
 }
 
 .Resizer:hover {

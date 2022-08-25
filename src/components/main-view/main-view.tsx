@@ -6,12 +6,33 @@ import { useAppSelector } from "../../services/redux/store/store";
 import MapView from "../map-view/map-view";
 import OrdersView from "../orders-view/order-view";
 import styles from "./main-view.module.css";
-
+import { isMobile } from "react-device-detect";
+import { useEffect, useState } from "react";
 const DEFAULT_POSITION: LatLngExpression = [41.44, 2.13];
 const { Header, Content, Footer } = Layout;
 
 const MainView = () => {
 	const { setCurrentMap, currentMap, fixSize } = useLogistic(null);
+	const [windowDimension, detectHW] = useState({
+		winWidth: window.innerWidth,
+		winHeight: window.innerHeight,
+	});
+
+	const detectSize = () => {
+		detectHW({
+			winWidth: window.innerWidth,
+			winHeight: window.innerHeight,
+		});
+	};
+
+	useEffect(() => {
+		window.addEventListener("resize", detectSize);
+
+		return () => {
+			window.removeEventListener("resize", detectSize);
+		};
+	}, [windowDimension]);
+
 	const { loading, fetchingCoordinates } = useAppSelector(
 		(store) => store.orders
 	);
@@ -26,9 +47,14 @@ const MainView = () => {
 				<Header className={styles.header}>
 					<h2>Demo logistics</h2>
 				</Header>
+
 				<Content className={styles.content}>
 					<SplitPane
-						split="vertical"
+						split={
+							isMobile && windowDimension.winWidth < 500
+								? "horizontal"
+								: "vertical"
+						}
 						minSize={300}
 						onDragFinished={() => fixSize()}
 					>
