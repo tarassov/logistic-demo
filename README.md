@@ -46,3 +46,7 @@ npm install
 ```sh
 npm start
 ```
+
+### Known issues
+
+It doesn't work good on mobile devices
