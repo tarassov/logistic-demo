@@ -1,9 +1,9 @@
 # What is this all about
 
-Demo logistic applicaiton.
+Demo logistics applicaiton.
 
 Application allows you to select one of the existing preloaded routes and shows it on the map.
-It is possible to create new route using preloaded point of destination and point of departure.
+It is possible to create a new route using preloaded points of destination and point of departure.
 
 Coordinates are fetching from the [nominatim](https://nominatim.openstreetmap.org)
 
