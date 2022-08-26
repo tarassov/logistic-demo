@@ -3,7 +3,12 @@ import { LatLngExpression } from "leaflet";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "leaflet-routing-machine";
 import { useAppDispatch, useAppSelector } from "../services/redux/store/store";
-import { setRoute, TRouteInfo } from "../services/redux/features/map-slice";
+import {
+	buildRouteFullfilled,
+	buildRouteRejected,
+	buildRouteReuqested,
+	TRouteInfo,
+} from "../services/redux/features/map-slice";
 import {
 	boundsToRouteInfoBounds,
 	routeInfoToBounds,
@@ -31,11 +36,17 @@ export default function useLogistic(map: L.Map | null) {
 						totalTime: route.summary?.totalTime,
 					},
 				};
-				dispatch(setRoute(info));
+				dispatch(buildRouteFullfilled(info));
 			}
 		},
-		[currentMap]
+		[currentMap, dispatch]
 	);
+	const onRoutingStart = useCallback(() => {
+		dispatch(buildRouteReuqested());
+	}, [dispatch]);
+	const OnRouteError = useCallback(() => {
+		dispatch(buildRouteRejected());
+	}, [dispatch]);
 
 	//empty route
 	const routeControl = useMemo(() => {
@@ -61,6 +72,8 @@ export default function useLogistic(map: L.Map | null) {
 			showAlternatives: false,
 		});
 		r.on("routesfound", onNewRoute);
+		r.on("routingstart", onRoutingStart);
+		r.on("routingerror", OnRouteError);
 		return r;
 	}, []);
 

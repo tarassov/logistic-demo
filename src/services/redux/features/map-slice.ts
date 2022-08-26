@@ -19,6 +19,7 @@ export type TRouteInfo = {
 };
 export type TMap = {
 	route: TRouteInfo;
+	isBuilding: boolean;
 };
 const initialState: TMap = {
 	route: {
@@ -29,17 +30,26 @@ const initialState: TMap = {
 		},
 		bounds: undefined,
 	},
+	isBuilding: false,
 };
 
 const slice = createSlice({
 	name: "map",
 	initialState: initialState,
 	reducers: {
-		setRoute: (state, action: PayloadAction<TRouteInfo>) => {
+		buildRouteReuqested: (state) => {
+			state.isBuilding = true;
+		},
+		buildRouteRejected: (state) => {
+			state.isBuilding = false;
+		},
+		buildRouteFullfilled: (state, action: PayloadAction<TRouteInfo>) => {
 			state.route = action.payload;
+			state.isBuilding = false;
 		},
 	},
 });
 
-export const { setRoute } = slice.actions;
+export const { buildRouteFullfilled, buildRouteRejected, buildRouteReuqested } =
+	slice.actions;
 export default slice.reducer;

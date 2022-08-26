@@ -36,6 +36,7 @@ const MainView = () => {
 	const { loading, fetchingCoordinates } = useAppSelector(
 		(store) => store.orders
 	);
+	const { isBuilding } = useAppSelector((store) => store.map);
 
 	const setRef = (element: L.Map) => {
 		setCurrentMap(element);
@@ -72,7 +73,7 @@ const MainView = () => {
 			</Layout>
 			<Modal
 				className={styles.modal}
-				visible={loading}
+				visible={loading || isBuilding}
 				footer={null}
 				closable={false}
 				centered
@@ -81,7 +82,11 @@ const MainView = () => {
 					textAlign: "center",
 				}}
 			>
-				{fetchingCoordinates ? "Fetching coordinates..." : "Loading..."}
+				{fetchingCoordinates
+					? "Fetching coordinates..."
+					: isBuilding
+					? "Building route..."
+					: "Loading..."}
 				<Spin />
 			</Modal>
 		</>
