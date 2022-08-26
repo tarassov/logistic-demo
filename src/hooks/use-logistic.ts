@@ -39,9 +39,11 @@ export default function useLogistic(map: L.Map | null) {
 
 	//empty route
 	const routeControl = useMemo(() => {
+		const plan = new L.Routing.Plan([], { draggableWaypoints: false });
 		const r = L.Routing.control({
 			waypoints: [],
 			show: false,
+			plan: plan,
 			lineOptions: {
 				styles: [
 					{
@@ -51,7 +53,7 @@ export default function useLogistic(map: L.Map | null) {
 					},
 				],
 				extendToWaypoints: true,
-				addWaypoints: true,
+				addWaypoints: false,
 				missingRouteTolerance: 1,
 			},
 			addWaypoints: false,
