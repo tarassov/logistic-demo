@@ -28,7 +28,7 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 		(store) => store.orders.selectedOrderId || ""
 	);
 
-	const { setRoutePoints } = useLogistic(map);
+	const { bulidRoute } = useLogistic(map);
 
 	const selectedOrder = useAppSelector((store) =>
 		selectOrderById(store, selectedOrderId)
@@ -49,9 +49,7 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 				selectedOrder?.to?.lat,
 				selectedOrder?.to?.lon,
 			];
-			setRoutePoints([from, to]);
-		} else {
-			setRoutePoints([]);
+			bulidRoute([from, to]);
 		}
 	}, [selectedOrder]);
 

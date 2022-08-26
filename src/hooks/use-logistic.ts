@@ -13,13 +13,11 @@ import {
 	boundsToRouteInfoBounds,
 	routeInfoToBounds,
 } from "../services/utils/map-converters";
-const DEFAULT_ZOOM = 10;
 
 export default function useLogistic(map: L.Map | null) {
 	const [currentMap, setCurrentMap] = useState(map);
-	const [position, setPosition] = useState(() => map?.getCenter());
-	const [routePoints, setRoutePoints] = useState<Array<LatLngExpression>>();
 	const { route } = useAppSelector((store) => store.map);
+	const [routeControl, setRouteControl] = useState<L.Routing.Control>();
 
 	const dispatch = useAppDispatch();
 
@@ -41,46 +39,10 @@ export default function useLogistic(map: L.Map | null) {
 		},
 		[currentMap, dispatch]
 	);
-	const onRoutingStart = useCallback(() => {
-		dispatch(buildRouteReuqested());
-	}, [dispatch]);
+
 	const OnRouteError = useCallback(() => {
 		dispatch(buildRouteRejected());
 	}, [dispatch]);
-
-	//empty route
-	const routeControl = useMemo(() => {
-		const plan = new L.Routing.Plan([], { draggableWaypoints: false });
-		const r = L.Routing.control({
-			waypoints: [],
-			show: false,
-			plan: plan,
-			lineOptions: {
-				styles: [
-					{
-						color: "#5618ff",
-						opacity: 0.6,
-						weight: 4,
-					},
-				],
-				extendToWaypoints: true,
-				addWaypoints: false,
-				missingRouteTolerance: 1,
-			},
-			addWaypoints: false,
-			fitSelectedRoutes: true,
-			showAlternatives: false,
-		});
-		r.on("routesfound", onNewRoute);
-		r.on("routingstart", onRoutingStart);
-		r.on("routingerror", OnRouteError);
-		return r;
-	}, []);
-
-	//track currentPosition
-	const onMove = useCallback(() => {
-		setPosition(currentMap?.getCenter());
-	}, [currentMap]);
 
 	//fix map size and fit route bounde after parent container has resized
 	const fixSize = useCallback(() => {
@@ -91,34 +53,45 @@ export default function useLogistic(map: L.Map | null) {
 		}
 	}, [currentMap, route]);
 
-	//build the route when routePoints have changed
-	useEffect(() => {
-		if (routeControl && routePoints) {
-			routeControl.setWaypoints([
-				L.latLng(routePoints[0]),
-				L.latLng(routePoints[1]),
-			]);
-			if (currentMap) routeControl?.addTo(currentMap);
+	const bulidRoute = (routePoints: Array<LatLngExpression>) => {
+		let r: L.Routing.Control;
+
+		if (!routeControl) {
+			const plan = new L.Routing.Plan([], { draggableWaypoints: false });
+
+			r = L.Routing.control({
+				waypoints: [],
+				show: false,
+				plan: plan,
+				lineOptions: {
+					styles: [
+						{
+							color: "#5618ff",
+							opacity: 0.6,
+							weight: 4,
+						},
+					],
+					extendToWaypoints: true,
+					addWaypoints: false,
+					missingRouteTolerance: 1,
+				},
+				addWaypoints: false,
+				fitSelectedRoutes: true,
+				showAlternatives: false,
+			});
+			r.on("routesfound", onNewRoute);
+			r.on("routingerror", OnRouteError);
+			setRouteControl(r);
+		} else {
+			r = routeControl;
 		}
-	}, [routePoints]);
-
-	//subscribe to map move
-	useEffect(() => {
-		currentMap?.on("move", onMove);
-		return () => {
-			currentMap?.off("move", onMove);
-		};
-	}, [currentMap, onMove]);
-
-	const flyTo = (point: L.LatLngTuple) => {
-		currentMap?.flyTo(point, DEFAULT_ZOOM);
+		r.setWaypoints([L.latLng(routePoints[0]), L.latLng(routePoints[1])]);
+		dispatch(buildRouteReuqested());
+		if (currentMap) r?.addTo(currentMap);
 	};
 
 	return {
-		position,
-		routePoints,
-		flyTo,
-		setRoutePoints,
+		bulidRoute,
 		fixSize,
 		setCurrentMap,
 		currentMap,
