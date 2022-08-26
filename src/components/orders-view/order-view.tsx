@@ -50,6 +50,8 @@ const OrdersView: FC<{ map: L.Map }> = ({ map }) => {
 				selectedOrder?.to?.lon,
 			];
 			bulidRoute([from, to]);
+		} else {
+			bulidRoute([]);
 		}
 	}, [selectedOrder]);
 

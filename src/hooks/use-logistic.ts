@@ -86,7 +86,7 @@ export default function useLogistic(map: L.Map | null) {
 			r = routeControl;
 		}
 		r.setWaypoints([L.latLng(routePoints[0]), L.latLng(routePoints[1])]);
-		dispatch(buildRouteReuqested());
+		if (routePoints.length) dispatch(buildRouteReuqested());
 		if (currentMap) r?.addTo(currentMap);
 	};
 
